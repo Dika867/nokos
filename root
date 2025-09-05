@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jualan NOKOS</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #2c3e50, #3498db);
+      color: white;
+      overflow-x: hidden;
+    }
+    header {
+      text-align: center;
+      padding: 30px;
+      background: rgba(0,0,0,0.6);
+      animation: fadeIn 2s ease-in-out;
+    }
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+      color: #f1c40f;
+      text-shadow: 2px 2px 5px black;
+      animation: glow 2s infinite alternate;
+    }
+    header p {
+      font-size: 1.2em;
+      margin: 10px 0 0;
+    }
+
+    .container {
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      animation: slideUp 2s ease-in-out;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      transition: transform 0.3s, background 0.3s;
+      cursor: pointer;
+    }
+    .card:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.2);
+    }
+    .card h2 {
+      margin: 10px 0;
+      color: #f39c12;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #e74c3c;
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .btn:hover {
+      background: #c0392b;
+    }
+
+    /* Popup */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .popup-content {
+      background: white;
+      color: black;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      animation: zoomIn 0.5s ease;
+    }
+    .popup-content h2 {
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+    .close {
+      margin-top: 15px;
+      display: inline-block;
+      padding: 8px 15px;
+      background: #e74c3c;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes slideUp {
+      from {transform: translateY(50px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+    @keyframes glow {
+      from {text-shadow: 0 0 10px #f1c40f;}
+      to {text-shadow: 0 0 25px #f39c12, 0 0 35px #f1c40f;}
+    }
+    @keyframes zoomIn {
+      from {transform: scale(0.5);}
+      to {transform: scale(1);}
+    }
+
+    /* Musik tombol */
+    #music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #27ae60;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      transition: background 0.3s;
+      z-index: 2000;
+    }
+    #music-btn:hover {
+      background: #2ecc71;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🔥 Jualan NOKOS 🔥</h1>
+    <p>Nomor Kosong Murah & Terpercaya 🚀</p>
+  </header>
+
+  <div class="container">
+    <div class="card" onclick="showPopup('NOKOS 1 - Rp10.000')">
+      <h2>NOKOS 1</h2>
+      <p>Harga: Rp10.000</p>
+      <a href="https://wa.me/6285714413477?text=Halo%20saya%20mau%20beli%20NOKOS%201" class="btn">Beli Sekarang</a>
+    </div>
+    <div class="card" onclick="showPopup('NOKOS 2 - Rp20.000')">
+      <h2>NOKOS 2</h2>
+      <p>Harga: Rp20.000</p>
+      <a href="https://wa.me/6285714413477?text=Halo%20saya%20mau%20beli%20NOKOS%202" class="btn">Beli Sekarang</a>
+    </div>
+    <div class="card" onclick="showPopup('NOKOS 3 - Rp30.000')">
+      <h2>NOKOS 3</h2>
+      <p>Harga: Rp30.000</p>
+      <a href="https://wa.me/6285714413477?text=Halo%20saya%20mau%20beli%20NOKOS%203" class="btn">Beli Sekarang</a>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h2 id="popup-text"></h2>
+      <p>Hubungi admin via WhatsApp untuk membeli.</p>
+      <a href="https://wa.me/6285714413477" class="btn">Chat Admin</a>
+      <div class="close" onclick="closePopup()">Tutup</div>
+    </div>
+  </div>
+
+  <!-- Musik -->
+  <audio id="bg-music" loop autoplay>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    Browser anda tidak mendukung audio.
+  </audio>
+  <button id="music-btn" onclick="toggleMusic()">⏸ Pause Musik</button>
+
+  <script>
+    function showPopup(product) {
+      document.getElementById('popup-text').innerText = product;
+      document.getElementById('popup').style.display = 'flex';
+    }
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+    }
+
+    // Musik kontrol
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("music-btn");
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        musicBtn.innerText = "⏸ Pause Musik";
+      } else {
+        music.pause();
+        musicBtn.innerText = "▶ Play Musik";
+      }
+    }
+  </script>
+
+</body>
+</html>
